@@ -1,0 +1,25 @@
+{
+  "author": {
+    "name": "nic chu"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
+  "deprecated": false,
+  "description": "Send data to server using WebSocket and wait for the response to resume the function using await.",
+  "keywords": [
+    "vue",
+    "vuejs",
+    "socket",
+    "websocket",
+    "async"
+  ],
+  "license": "MIT",
+  "main": "WebSocket.js",
+  "name": "websocket-async-vue-nic",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.1"
+}
