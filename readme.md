@@ -7,14 +7,6 @@ JS:
 const response = await this.$websocket.sendAsync( { some:  'data'  } );
 console.log( "Response:",  response.msg );
 ```
-On server(PHP):
-```php
-$data = json_decode( $msg );
-//Do something with the data and send back along with '_id'
-$from->send( json_encode( [
-	'_id'  =>  $data['_id'],
-	'msg'  =>  'Send response back to the function'
-] ) );
 ```
 
 ## Install
@@ -22,14 +14,14 @@ $from->send( json_encode( [
 
 
 ```
-npm install vue-async-websocket --save
+npm install vue-async-websocket-nic --save
 ```
 
 ## Usage
 
 Register Vue Plugin:
 ```javascript
-import WebSocketVue from 'vue-async-websocket';
+import WebSocketVue from 'vue-async-websocket-nic';
 
 //Pass url as second argument, third argument is an optional options object
 Vue.use( WebSocketVue, 'ws://localhost:8090', {} );
@@ -44,34 +36,28 @@ You can pass an object with options to the *Vue.use()*.
 ```javascript
 const defOptions = {
 	'debug': false,
-	
-	'protocols': '',
-	'load-on-start': false,
-	
-	'max-timeout': 5000,
+	'load-on-start': false,	
+	'max-timeout': 10000,
 	'reconnect': true,
 	'max-reconnect-count': 4,
-	'reconnect-delay': 2000,
-	
-	'create-id-func': null,
-	
-	'response-id': '_id',
-	'response-type': '_type'
+	'reconnect-delay': 5000,
+	'create-autoid-func': true,
+	'create-id': '_id',
+	'response-id': '_id'
 };
 Vue.use( WebSocketVue, 'ws://localhost:8090', defOptions );
 ```
 | Parameter		            | Value         |
 | :-------------:           |---------------|
 | **debug** 				| *Boolean*. Whether to display additional logs in console or not. |
-| **protocols** 			| *String/Array*. Protocols for the WebSocket. |
 | **load-on-start** 		| *Boolean*. Whether to automatically open connection, or manually. |
 | **max-timeout** 			| *Integer*. How long to wait for response in _ms_. Can be overwritten by args in *send* function. |
 | **reconnect** 			| *Boolean*. Whether to reconnect automatically when connection is closed or not. |
 | **max-reconnect-count** 	| *Integer*. How many times to reconnect. |
 | **reconnect-delay** 		| *Integer*. Time in *ms* to wait between each reconnect. |
-| **create-id-func** 		| *Callable*. If you want to create different function for creating ID for callbacks, you can use this option. It takes an array of keys as an argument, and return a string. |
+| **create-autoid-func** 		| *Boolean*. creating auto ID or object ID. |
+| **create-id** 			| *String*. If you want in your client code to use different name than '_id' you can specify it here. |
 | **response-id** 			| *String*. If you want in your server code to use different name than '_id' you can specify it here. |
-| **response-type** 		| *String*. If you want in your server code to use different name than '_type' you can specify it here. |
 ---
 ### Sending data
 **sendAsync( data, args = {} )**

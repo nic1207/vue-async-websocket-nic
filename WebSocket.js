@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-unreachable */
-import { createID } from './Mixins';
+import { createObjID, createAutoID } from './Mixins';
 import Listeners from './Listeners';
 import Send from './Send';
 
 
 const defOptions = {
-    'debug': false,
+    'debug': true,
     
     'protocols': '',
     'load-on-start': false,
@@ -18,15 +18,15 @@ const defOptions = {
     'max-reconnect-count': 4,
     'reconnect-delay': 2000,
 
-    'create-id-func': null,
+    'create-autoid-func': null,
 
-    'response-id': 'SM',
+    'response-id': '-',
     'response-type': '_type',
 };
 
 const webSocketPlugin = {};
 webSocketPlugin.install = function( Vue, url, options = {} ){
-
+    console.log('webSocketPlugin.install(url=', url, 'options=', options, ')')
     if( typeof url === 'undefined' || url === null ){
         throw 'URL is not set';
     }
@@ -42,21 +42,24 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
     let reconnectTimeout = null;
 
     const open = () => {
+        console.log('open()');
         if( webSocket !== null )
             return false;
         if( options['debug'] === true )
-            console.log( "Starting WebSocket on url: " + url );
-        webSocket = new WebSocket( url, options['protocols'] );
+            console.log( "[debug] Starting WebSocket on url: " + url );
+        webSocket = new WebSocket(url);
         registerEvents();
     }
     const close = () => {
+        console.log('open()');
         if( webSocket === null )
             return false;
         if( options['debug'] === true )
-            console.log( "Close connection" );
+            console.log( "[debug] Close connection" );
         webSocket.close();
     };
     const reconnect = () => {
+        console.log('reconnect()');
         if( reconnectCount < options['max-reconnect-count'] ){
 
             reconnectTimeout = setTimeout( () => {
@@ -72,10 +75,10 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
         }
     };
     const registerEvents = () => {
-
+        console.log('registerEvents()');
         webSocket.onopen = event => {
             if( options['debug'] === true )
-                console.log( "Connection opened!" );
+                console.log( "[debug] Websocket Connection opened!" );
             
             reconnectCount = 0;
             clearTimeout( reconnectTimeout );
@@ -94,8 +97,9 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
         };
         
         webSocket.onmessage = event => {
+            console.log('onmessage()');
             if( options['debug'] === true )
-                console.log( "Message: ", event );
+                console.log( "[debug] Message: ", event );
             
             const data = JSON.parse( event.data );
             if( options['response-id'] in data ){
@@ -114,7 +118,7 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
         webSocket = url;
         url = webSocket.url;
         registerEvents();
-    }else if( webSocket === null && options['load-on-start'] === false ){
+    }else if( webSocket === null && options['load-on-start'] === true ){
         open();
     }
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { createID } from './Mixins';
+import { createObjID, createAutoID } from './Mixins';
 
 export default () => {
     const listeners = {};
@@ -13,7 +13,7 @@ export default () => {
         } );
     };
     const addEventListener = ( type, callback ) => {
-        const id = createID( Object.keys( listeners ) );
+        const id = createObjID( Object.keys( listeners ) );
         listeners[id] = { 
             type: type === '' ? 'any' : type, 
             callback 

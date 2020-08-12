@@ -1,8 +1,5 @@
 {
-  "author": {
-    "name": "nic chu"
-  },
-  "bundleDependencies": false,
+  "author": "nic chu",
   "dependencies": {
     "vue": "^2.6.10"
   },
@@ -17,9 +14,20 @@
   ],
   "license": "MIT",
   "main": "WebSocket.js",
-  "name": "websocket-async-vue-nic",
+  "name": "vue-async-websocket-nic",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.1"
+  "version": "0.0.2",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nic1207/vue-async-websocket-nic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nic1207/vue-async-websocket-nic/issues"
+  },
+  "homepage": "https://github.com/nic1207/vue-async-websocket-nic#readme"
 }

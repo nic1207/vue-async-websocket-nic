@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { createID } from './Mixins';
+import { createObjID, createAutoID } from './Mixins';
 
 const defSendArgs = {
     //Send
@@ -17,7 +17,7 @@ const defSendArgs = {
 
     //Calbacks args
     'callback': {
-        'send-data-only': false,
+        'send-data-only': true,
     },
 };
 
@@ -71,9 +71,9 @@ export default ( options ) => {
         let msg = data;
 
         if( callback !== null ){
-            const id = msg[options['create-id']] = options['create-id-func'] === null ? 
-                createID( Object.keys( callbacks ) ) : 
-                options['create-id-func']( Object.keys( callbacks ) );
+            const id = msg[options['create-id']] = options['create-autoid-func'] === true ? 
+                createAutoID( Object.keys( callbacks ) ) : 
+                createObjID( Object.keys( callbacks ) );
             
             callbacks[ id ] = {};
             callbacks[ id ]['options'] = args['callback'];
@@ -98,7 +98,7 @@ export default ( options ) => {
         //
 
         if( options['debug'] === true )
-            console.log( "Send json: ", msg );
+            console.log( "[debug] Send json: ", msg );
         webSocket.send( msg );
 
     }   
