@@ -1,10 +1,17 @@
 {
+  "name": "vue-async-websocket-nic",
+  "version": "0.0.3",
+  "description": "Send data to server using WebSocket and wait for the response to resume the function using await.",
   "author": "nic chu",
+  "license": "MIT",
+  "main": "dist/build.min.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "vue": "^2.6.10"
   },
-  "deprecated": false,
-  "description": "Send data to server using WebSocket and wait for the response to resume the function using await.",
   "keywords": [
     "vue",
     "vuejs",
@@ -12,16 +19,6 @@
     "websocket",
     "async"
   ],
-  "license": "MIT",
-  "main": "WebSocket.js",
-  "name": "vue-async-websocket-nic",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "0.0.2",
-  "directories": {
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nic1207/vue-async-websocket-nic.git"
@@ -29,5 +26,36 @@
   "bugs": {
     "url": "https://github.com/nic1207/vue-async-websocket-nic/issues"
   },
-  "homepage": "https://github.com/nic1207/vue-async-websocket-nic#readme"
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  },
+  "homepage": "https://github.com/nic1207/vue-async-websocket-nic#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.2",
+    "es2015": "0.0.0",
+    "webpack": "^3.12.0",
+    "webpack-cli": "^3.3.12"
+  }
 }
