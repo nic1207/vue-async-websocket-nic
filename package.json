@@ -1,13 +1,15 @@
 {
   "name": "vue-async-websocket-nic",
-  "version": "0.0.3",
-  "description": "Send data to server using WebSocket and wait for the response to resume the function using await.",
-  "author": "nic chu",
+  "version": "0.1.0",
+  "description": "vue async websocket plugin",
+  "author": {
+    "name": "nic chu",
+    "email": "nic1207@gmail.com"
+  },
   "license": "MIT",
   "main": "dist/build.min.js",
   "scripts": {
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "vue-cli-service build --target lib --name vue-async-websocket-nic ./src/WebSocket.js"
   },
   "dependencies": {
     "vue": "^2.6.10"
@@ -15,7 +17,6 @@
   "keywords": [
     "vue",
     "vuejs",
-    "socket",
     "websocket",
     "async"
   ],
