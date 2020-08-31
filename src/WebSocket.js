@@ -20,8 +20,7 @@ const defOptions = {
 
     'create-autoid-func': null,
 
-    'response-id': '-',
-    'response-type': '_type',
+    'response-id': 'SN'
 };
 
 const webSocketPlugin = {};
@@ -97,18 +96,21 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
         };
         
         webSocket.onmessage = event => {
-            console.log('onmessage()');
+            console.log('webSocket.onmessage()');
             if( options['debug'] === true )
-                console.log( "[debug] Message: ", event );
+                console.log( "[debug] Message: event=", event );
             
             const data = JSON.parse( event.data );
             if( options['response-id'] in data ){
-                send.fireCallback( data[ options['response-id'] ] );
-                return;
+                var result = send.fireCallback( data[ options['response-id'] ] );
+                console.log('fireCallback(result=', result, ')');
+                if(result)
+                    return;
             }
 
-            const type = data[ options['response-type'] ] || 'any';
-            listener.fireListeners( type, data );
+            // type = data[ options['response-type'] ] || 'any';
+            //listener.fireListeners( type, data );
+            listener.fireListeners( 'onmessage', data );
         };
 
     }

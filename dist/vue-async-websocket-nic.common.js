@@ -225,6 +225,7 @@ const createAutoID = function (keys) {
 /* harmony default export */ var Listeners = (() => {
     const listeners = {};
     const fireListeners = ( type, data ) => {
+        console.log('fireListeners(type=',type, 'data=', data, ')');
         Object.keys( listeners ).forEach( key => {
             const listener = listeners[key];
             if( listener.type.toLowerCase() === 'any' || 
@@ -235,6 +236,7 @@ const createAutoID = function (keys) {
     };
     const addEventListener = ( type, callback ) => {
         const id = createObjID( Object.keys( listeners ) );
+        console.log('addEventListener(id=', id, ')');
         listeners[id] = { 
             type: type === '' ? 'any' : type, 
             callback 
@@ -242,6 +244,7 @@ const createAutoID = function (keys) {
         return id;
     };
     const removeEventListener = ( id ) => {
+        console.log('removeEventListener(id=', id, ')');
         if( !( id in listeners ) ){
             return false;
         }
@@ -296,9 +299,11 @@ const defSendArgs = {
                 clearTimeout( callbacks[ id ]['timeout'] );
             //
             delete callbacks[ id ];
+            return true;
         }else{
             console.log('id=', id);
             console.error( "ID(data._id) is passed by message, but not found in callbacks!" );
+            return false;
         }
     }
 
@@ -390,8 +395,7 @@ const defOptions = {
 
     'create-autoid-func': null,
 
-    'response-id': '-',
-    'response-type': '_type',
+    'response-id': 'SN'
 };
 
 const webSocketPlugin = {};
@@ -467,18 +471,21 @@ webSocketPlugin.install = function( Vue, url, options = {} ){
         };
         
         webSocket.onmessage = event => {
-            console.log('onmessage()');
+            console.log('webSocket.onmessage()');
             if( options['debug'] === true )
-                console.log( "[debug] Message: ", event );
+                console.log( "[debug] Message: event=", event );
             
             const data = JSON.parse( event.data );
             if( options['response-id'] in data ){
-                send.fireCallback( data[ options['response-id'] ] );
-                return;
+                var result = send.fireCallback( data[ options['response-id'] ] );
+                console.log('fireCallback(result=', result, ')');
+                if(result)
+                    return;
             }
 
-            const type = data[ options['response-type'] ] || 'any';
-            listener.fireListeners( type, data );
+            // type = data[ options['response-type'] ] || 'any';
+            //listener.fireListeners( type, data );
+            listener.fireListeners( 'onmessage', data );
         };
 
     }

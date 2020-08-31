@@ -38,9 +38,11 @@ export default ( options ) => {
                 clearTimeout( callbacks[ id ]['timeout'] );
             //
             delete callbacks[ id ];
+            return true;
         }else{
             console.log('id=', id);
             console.error( "ID(data._id) is passed by message, but not found in callbacks!" );
+            return false;
         }
     }
 

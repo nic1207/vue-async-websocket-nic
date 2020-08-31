@@ -1,13 +1,13 @@
 {
   "name": "vue-async-websocket-nic",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "vue async websocket plugin",
   "author": {
     "name": "nic chu",
     "email": "nic1207@gmail.com"
   },
   "license": "MIT",
-  "main": "dist/build.min.js",
+  "main": "dist/vue-async-websocket-nic.umd.js",
   "scripts": {
     "build": "vue-cli-service build --target lib --name vue-async-websocket-nic ./src/WebSocket.js"
   },
